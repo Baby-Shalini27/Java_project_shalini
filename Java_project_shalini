@@ -1,0 +1,77 @@
+import java.util.*;
+
+class Student {
+    String name;
+    String studentID;
+    String college;
+    String degree;
+    String contact;
+    String areaOfInterest;
+    double salaryExpectation;
+    List<String> skills = new ArrayList<>();
+    boolean isHired = false;
+
+    Student(String name, String studentID, String college, String degree, String contact,
+            String areaOfInterest, double salaryExpectation) {
+        this.name = name;
+        this.studentID = studentID;
+        this.college = college;
+        this.degree = degree;
+        this.contact = contact;
+        this.areaOfInterest = areaOfInterest;
+        this.salaryExpectation = salaryExpectation;
+    }
+
+    void updateSkills(List<String> newSkills) {
+        this.skills = newSkills;
+    }
+
+    void displayDetails() {
+        System.out.println("\n--- Student Details ---");
+        System.out.println("Name: " + name);
+        System.out.println("ID: " + studentID);
+        System.out.println("College: " + college);
+        System.out.println("Degree: " + degree);
+        System.out.println("Contact: " + contact);
+        System.out.println("Area of Interest: " + areaOfInterest);
+        System.out.println("Salary Expectation: " + salaryExpectation);
+        System.out.println("Skills: " + skills);
+        System.out.println("Hired: " + (isHired ? "Yes" : "No"));
+    }
+}
+
+public class PlacementSystem {
+    static List<Student> students = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        // Sample student
+        students.add(new Student("Alice", "S001", "ABC College", "B.Tech", "1234567890", "AI", 50000));
+        students.get(0).updateSkills(Arrays.asList("Java", "Python"));
+
+        System.out.println("\n--- Student Skill Update ---");
+        System.out.print("Enter your Student ID: ");
+        String id = sc.nextLine();
+        Student student = findStudentByID(id);
+
+        if (student != null) {
+            System.out.println("Enter your new skills (comma-separated):");
+            String skillsInput = sc.nextLine();
+            List<String> newSkills = Arrays.asList(skillsInput.split(","));
+            student.updateSkills(newSkills);
+            System.out.println("Skills updated successfully.");
+            student.displayDetails();
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    static Student findStudentByID(String id) {
+        for (Student s : students) {
+            if (s.studentID.equalsIgnoreCase(id)) {
+                return s;
+            }
+        }
+        return null;
+    }
+}
